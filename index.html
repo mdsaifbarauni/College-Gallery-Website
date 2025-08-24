@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhotoFusion Gallery</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body id="home-page">
+
+    <header class="navbar">
+        <div class="container">
+            <a href="#" class="logo">SAIF/CSE/66D</a>
+            <nav class="nav-links">
+                <a href="#gallery">Gallery</a>
+                <a href="admin.html">Admin</a>
+            </nav>
+            <div class="gallery-controls-nav">
+                <input type="text" id="search-bar" placeholder="Search by title...">
+                <select id="sort-options">
+                    <option value="custom">Custom Order</option>
+                    <option value="date">Sort by Date</option>
+                    <option value="title">Sort by Title</option>
+                </select>
+            </div>
+            <div class="header-controls">
+                <div id="date-time" class="date-time"></div>
+                <button id="theme-toggle" class="theme-toggle">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="gallery" class="photo-gallery">
+            </section>
+    </main>
+
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <span class="lightbox-fullscreen" title="Toggle Fullscreen">⛶</span>
+        <img class="lightbox-content" id="lightbox-img" alt="Enlarged view">
+        <div class="lightbox-caption">
+            <h3 id="lightbox-title"></h3>
+            <p id="lightbox-description"></p>
+        </div>
+        <a class="lightbox-prev">&#10094;</a>
+        <a class="lightbox-next">&#10095;</a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

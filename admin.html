@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body id="admin-page">
+    
+    <div id="login-section" class="login-container">
+        <form id="login-form" class="glass-form">
+            <h2>Admin Login</h2>
+            <input type="text" id="username" placeholder="Username" required value="admin">
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+            <p id="login-error" class="error-message"></p>
+        </form>
+    </div>
+
+    <div id="dashboard-section" class="dashboard-container" style="display: none;">
+        <header class="dashboard-header">
+            <h1>Admin Dashboard</h1>
+            <a href="index.html" class="nav-button">View Gallery</a>
+            <button id="logout-btn">Logout</button>
+        </header>
+
+        <section class="admin-card">
+            <h2>Upload New Photo(s)</h2>
+            <form id="upload-form">
+                <input type="text" id="upload-title" name="title" placeholder="Title (Optional)">
+                <input type="date" id="upload-date" name="date">
+                <textarea id="upload-description" name="description" placeholder="Description (Optional)"></textarea>
+                
+                <input type="file" id="upload-file" name="photos" accept="image/*" required multiple>
+                <p class="upload-note">You can select multiple files at once.</p>
+                <button type="submit">Upload Photos</button>
+            </form>
+        </section>
+
+        <section class="admin-card">
+            <h2>Manage Gallery (Drag to Reorder)</h2>
+            <div id="admin-gallery-list" class="admin-gallery-list"></div>
+        </section>
+        
+        <section class="admin-card">
+            <h2>Change Admin Password</h2>
+            <form id="change-password-form">
+                <input type="password" id="current-password" placeholder="Current Password" required>
+                <input type="password" id="new-password" placeholder="New Password" required>
+                <input type="password" id="confirm-password" placeholder="Confirm New Password" required>
+                <button type="submit">Change Password</button>
+                <p id="password-message" class="message"></p>
+            </form>
+        </section>
+
+        <section class="admin-card">
+            <h2>Gallery Settings</h2>
+            <div class="settings-form">
+                <label>
+                    <input type="checkbox" id="slideshow-toggle"> Enable Auto-Slideshow on Home Page
+                </label>
+                <label>
+                    Slideshow Speed (ms):
+                    <input type="number" id="slideshow-speed" min="1000" step="500" value="3000">
+                </label>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

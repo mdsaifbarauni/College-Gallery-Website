@@ -1,0 +1,205 @@
+/* --- Global Styles & Variables --- */
+:root {
+    --primary-color: #00aaff;
+    --bg-color-light: #f0f4f8;
+    --bg-color-dark: #1a1a2e;
+    --text-color-light: #1c1c1e;
+    --text-color-dark: #e0e0e0;
+    --glass-bg-light: rgba(255, 255, 255, 0.25);
+    --glass-bg-dark: rgba(40, 40, 70, 0.25);
+    --glass-border: rgba(255, 255, 255, 0.18);
+    --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: var(--font-family);
+    margin: 0;
+    color: var(--text-color-light);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transition: background 0.5s, color 0.5s;
+    overflow-x: hidden;
+}
+
+/* --- Dark Mode --- */
+body.dark-mode {
+    color: var(--text-color-dark);
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.container {
+    width: 90%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* --- Header & Navbar --- */
+.navbar {
+    position: fixed; top: 0; left: 0; width: 100%;
+    padding: 15px 0; z-index: 1000; transition: all 0.3s ease;
+}
+.navbar.scrolled {
+    background: var(--glass-bg-light);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
+}
+body.dark-mode .navbar.scrolled { background: var(--glass-bg-dark); }
+.navbar .container { display: flex; justify-content: space-between; align-items: center; }
+.logo { font-size: 1.8em; font-weight: 700; color: #fff; text-decoration: none; animation: fadeIn 1s; }
+.nav-links { display: flex; align-items: center; }
+.nav-links a { color: #fff; text-decoration: none; margin: 0 15px; font-weight: 500; transition: color 0.3s; }
+.nav-links a:hover { color: var(--primary-color); }
+.header-controls { display: flex; align-items: center; gap: 20px; }
+.date-time { color: #fff; font-size: 0.9em; background: rgba(0, 0, 0, 0.2); padding: 5px 10px; border-radius: 5px; }
+.theme-toggle { background: none; border: none; font-size: 1.5em; cursor: pointer; color: #fff; }
+
+/* --- Main Content & Gallery --- */
+main { margin-top: 100px; }
+
+/* Styles for new gallery controls in navbar */
+.gallery-controls-nav {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+#search-bar, #sort-options {
+    padding: 10px; border-radius: 8px; border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.5);
+}
+#search-bar { width: 220px; }
+
+
+.photo-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.gallery-item {
+    position: relative; overflow: hidden; border-radius: 15px;
+    box-shadow: var(--shadow); cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
+    animation: fadeIn 0.5s ease-out;
+}
+.gallery-item:hover { transform: scale(1.05) rotate(2deg); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+.gallery-item:hover img { transform: scale(1.1); }
+.photo-info {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+    color: #fff; padding: 40px 20px 20px;
+    opacity: 0; transform: translateY(100%);
+    transition: opacity 0.4s, transform 0.4s ease;
+}
+.gallery-item:hover .photo-info { opacity: 1; transform: translateY(0); }
+.photo-info h3 { margin: 0 0 5px; }
+.photo-info p { margin: 0; font-size: 0.8em; }
+.gallery-item.spotlight { transform: scale(1.08); box-shadow: 0 0 30px var(--primary-color), 0 0 15px #fff; z-index: 10; }
+
+/* --- Lightbox --- */
+.lightbox {
+    display: none; position: fixed; z-index: 1001;
+    left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    align-items: center; justify-content: center;
+}
+.lightbox-content { max-width: 80%; max-height: 70%; animation: zoomIn 0.5s; }
+.lightbox-close { position: absolute; top: 20px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; }
+.lightbox-caption { text-align: center; color: #ccc; padding: 10px 0; width: 80%; max-width: 700px; }
+.lightbox-prev, .lightbox-next {
+    cursor: pointer; position: absolute; top: 50%; width: auto; padding: 16px;
+    margin-top: -50px; color: white; font-weight: bold; font-size: 20px;
+    transition: 0.6s ease; border-radius: 0 3px 3px 0; user-select: none;
+}
+.lightbox-prev { left: 10px; }
+.lightbox-next { right: 10px; }
+.lightbox-prev:hover, .lightbox-next:hover { background-color: rgba(255,255,255,0.2); }
+
+/* --- Admin Page --- */
+.login-container, .dashboard-container { display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
+.dashboard-container { justify-content: flex-start; }
+.glass-form, .admin-card {
+    background: var(--glass-bg-light); backdrop-filter: blur(15px);
+    border-radius: 15px; border: 1px solid var(--glass-border);
+    padding: 30px; width: 100%; max-width: 500px;
+    box-shadow: var(--shadow); animation: fadeIn 1s;
+}
+body.dark-mode .glass-form, body.dark-mode .admin-card { background: var(--glass-bg-dark); }
+.glass-form h2, .admin-card h2 { text-align: center; margin-top: 0; margin-bottom: 20px; }
+input, textarea, select, button { font-family: var(--font-family); font-size: 1rem; }
+.glass-form input, .glass-form textarea, .admin-card input, .admin-card textarea {
+    width: 100%; padding: 12px; margin-bottom: 15px;
+    border-radius: 8px; border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.5); box-sizing: border-box;
+}
+.glass-form button, .admin-card button {
+    width: 100%; padding: 12px; border: none; border-radius: 8px;
+    background-color: var(--primary-color); color: white; font-weight: bold;
+    cursor: pointer; transition: background-color 0.3s, transform 0.2s;
+}
+.glass-form button:hover, .admin-card button:hover { background-color: #0088cc; transform: translateY(-2px); }
+.dashboard-container { width: 90%; max-width: 1000px; margin: 0 auto; padding-top: 50px; }
+.dashboard-header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.admin-card { margin-bottom: 30px; max-width: none; }
+.admin-gallery-list { display: flex; flex-direction: column; gap: 15px; }
+.admin-gallery-item {
+    display: flex; align-items: center; padding: 10px;
+    background: rgba(0,0,0,0.1); border-radius: 8px; cursor: grab;
+    transition: background-color 0.3s;
+}
+.admin-gallery-item.dragging { opacity: 0.5; background-color: var(--primary-color); }
+.admin-gallery-item img { width: 80px; height: 60px; object-fit: cover; border-radius: 5px; margin-right: 15px; }
+.admin-item-details { flex-grow: 1; }
+.admin-item-actions button { padding: 5px 10px; margin-left: 10px; font-size: 0.9em; width: auto; }
+.btn-delete { background-color: #e74c3c; }
+.settings-form { display: flex; flex-direction: column; gap: 15px; }
+.error-message { color: #e74c3c; text-align: center; }
+.upload-note { font-size: 0.8em; text-align: center; margin-top: -5px; opacity: 0.7; }
+
+/* --- Responsive Design --- */
+@media (max-width: 992px) {
+    .navbar .container { flex-wrap: wrap; justify-content: space-between; row-gap: 15px; }
+    .gallery-controls-nav { width: 100%; order: 3; justify-content: center; }
+    main { margin-top: 150px; }
+}
+
+@media (max-width: 480px) {
+    .nav-links { display: none; } /* Hide nav links on very small screens */
+    .date-time { display: none; }
+    main { margin-top: 120px; }
+}
+/* --- Add this to the end of your styles.css file --- */
+
+.lightbox-fullscreen {
+    position: absolute;
+    top: 20px;
+    right: 85px; /* Position it to the left of the close button */
+    color: #f1f1f1;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    user-select: none;
+}
+
+.lightbox-fullscreen:hover {
+    color: #ccc;
+}
+
+/* Style lightbox for when it is in fullscreen mode */
+.lightbox:fullscreen {
+    background-color: rgba(0,0,0,1); /* Make background fully opaque */
+}
+
+.lightbox:fullscreen .lightbox-content {
+    max-height: 90%; /* Allow image to be larger in fullscreen */
+}
